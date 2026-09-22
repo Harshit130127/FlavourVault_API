@@ -4,3 +4,21 @@
 
 # database
 *.sqlite3
+
+# Git
+.git
+.gitiognore
+
+# Docker
+.docker
+
+# Python
+# pycache is a cache directory for Python files, which is not needed in version control and in docker containers.
+#  It leads to unnecessary clutter and can cause issues with file permissions.
+app/__pycache__/
+app/*/__pycache__/
+app/*/*/__pycache__/
+app/*/*/*/__pycache__/
+.env/
+.venv/
+venv/
