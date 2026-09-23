@@ -6,3 +6,4 @@ django-autoslug==1.9.9
 django-import-export==4.4.1
 django-tinymce==4.1.0
 django-paypal==2.1
+psycopg2
