@@ -1,3 +1,13 @@
-from django.shortcuts import render
+""" views for the user api"""
 
-# Create your views here.
+
+from rest_framework import generics, authentication, permissions
+
+from user.Serializers import UserSerializer
+
+
+class CreateUserView(generics.CreateAPIView):
+    """ create a new user in the system"""
+
+    serializer_class = UserSerializer
+
