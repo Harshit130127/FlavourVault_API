@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     # fieldsets control the layout of admin "edit user" page
     fieldsets = (
 
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password','name')}),
 
         (
             _('Permissions'),
@@ -41,7 +41,7 @@ class UserAdmin(BaseUserAdmin):
 
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),
+            # 'classes': ('wide',),
             'fields' : (
                 'email',
                 'password1',
