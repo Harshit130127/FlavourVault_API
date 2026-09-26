@@ -5,7 +5,7 @@ from django.urls import path
 from user import views
 
 
-app_name = 'user'
+app_name = 'user'  # namespace that is used to uniquely reverse named url in the test.py
 
 urlpatterns = [
     path('create/', views.CreateUserView.as_view(), name= 'create'),
