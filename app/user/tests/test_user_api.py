@@ -9,7 +9,7 @@ from rest_framework import status
 
 
 CREATE_USER_URL = reverse('user:create')
-
+TOKEN_URL = reverse('user:token')
 
 def create_user(**params):
     """create and return a new user"""
@@ -74,3 +74,31 @@ class PublicUserApiTests(TestCase):
         ).exists()
 
         self.assertFalse(user_exists)
+
+
+def test_create_token_for_user(self):
+    """ test generates token for valid credentials"""
+
+    user_details = {
+        'name': 'Test Name',
+        'email': 'test@example.com',
+        'password' : 'test-user-password123'
+    }
+
+    create_user(**user_details)
+
+    payload = {
+        'email': user_details['email'],
+        'password': user_details['password']
+    }
+
+    res = self.client.post(TOKEN_URL, payload)
+
+    self.assertIn('token', res.data)
+    self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+
+def test_create_token_bad_credentials(self):
+    """ test return error if credentials invalid"""
+
+    create_user
