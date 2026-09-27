@@ -50,7 +50,7 @@ class AuthTokenSerializer(serializers.Serializer):
     def validate(self, attrs):
         """ validate and authenticate the user"""
 
-        email = attrs.get('email')
+        email = attrs.get('email') # attrs is a dictionary that contains the data passed to the serializer
         password = attrs.get('password')
         user = authenticate(
             request = self.context.get('request'),
