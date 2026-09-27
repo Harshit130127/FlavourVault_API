@@ -184,3 +184,16 @@ class PublicRecipeApiTests(TestCase):
 
         recipe.refresh_from_db()
         self.assertEqual(recipe.user, self.user)
+
+
+    def test_delete_recipe(self):
+        """test deleting a recipe successful"""
+
+        recipe= create_recipe(user=self.user)
+
+        url = detail_url(recipe.id)
+
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
