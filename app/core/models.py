@@ -54,3 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):  # to represent a user in the sy
 
 
     USERNAME_FIELD='email'
+
+
+    
