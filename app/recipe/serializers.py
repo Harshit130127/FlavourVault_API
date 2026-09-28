@@ -30,6 +30,14 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags = validated_data.pop('tags', [])
         recipe = Recipe.objects.create(**validated_data)
         auth_user = self.context['request'].user
+        for tag in tags:
+            tag_ob, created = Tag.objects.get_or_create(
+                user = auth_user,
+                **tag,
+            )
+            recipe.tag.add(tag_ob)
+
+        return recipe
 
 
 
