@@ -35,7 +35,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 class TagViewSet(viewsets.GenericViewSet,
                 mixins.ListModelMixin,
-                mixins.UpdateModelMixin):
+                mixins.UpdateModelMixin,
+                mixins.DestroyModelMixin):
     """ view for manage tag APIs"""
 
     serializer_class = serializers.TagSerializer
@@ -48,4 +49,3 @@ class TagViewSet(viewsets.GenericViewSet,
         """return objects for the current authenticated user only"""
         return self.queryset.filter(user=self.request.user).order_by('-name')
 
-    
