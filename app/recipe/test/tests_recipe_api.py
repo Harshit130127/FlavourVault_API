@@ -322,3 +322,57 @@ class PublicRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.tag.count(), 0)
+
+
+
+    def test_create_recipe_with_new_ingredient(self):
+            """test creating a recipe with new ingredients"""
+
+            payload = {
+                'title': 'Pasta',
+                'time_minutes': 30,
+                'price': 100,
+                'ingredients': [{'name': 'Tomato'}, {'name': 'Cauliflower'}]
+            }
+
+            res = self.client.post(RECIPE_URL , payload, format='json')
+
+            self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+            recipe = Recipe.objects.filter(user=self.user)
+            self.assertEqual(recipe.count(), 1)
+            recipe = recipe[0]
+            self.assertEqual(recipe.ingredients.count(), 2)
+
+            for ingredient in payload['ingredients']:
+                exists = recipe.ingredients.filter(
+                    name=ingredient['name'],
+                    user=self.user,
+                ).exists()
+                self.assertTrue(exists)
+
+
+    def test_create_recipe_with_existing_ingredient(self):
+        """test creating a recipe with existing ingredient"""
+
+        ingredient = Ingredient.objects.create(user=self.user, name='Lentils')
+        payload = {
+            'title': 'Dal',
+            'time_minutes': 30,
+            'price': 12.00,
+            'ingredients': [{'name': 'Lentils'}, {'name': 'Onion'}],
+        }
+
+        res = self.client.post(RECIPE_URL, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        recipes = Recipe.objects.filter(user=self.user)
+        self.assertEqual(recipes.count(), 1)
+        recipe = recipes[0]
+        self.assertEqual(recipe.ingredients.count(), 2)
+        self.assertIn(ingredient, recipe.ingredients.all())
+        for ingredient in payload['ingredients']:
+            exists = recipe.ingredients.filter(
+                name=ingredient['name'],
+                user=self.user,
+            ).exists()
+            self.assertTrue(exists)
