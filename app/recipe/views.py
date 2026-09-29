@@ -51,7 +51,8 @@ class TagViewSet(viewsets.GenericViewSet,
 
 
 class IngredientViewSet(viewsets.GenericViewSet,
-                        mixins.ListModelMixin):
+                        mixins.ListModelMixin,
+                        mixins.UpdateModelMixin):
     """ view for manage ingredient APIs"""
 
     serializer_class = serializers.IngredientSerializer
