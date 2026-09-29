@@ -107,3 +107,31 @@ class PrivateIngredientsApiTests(TestCase):
 
 
 
+    def test_filter_ingredients_assigned_to_recipes(self):
+        """test listing ingredients by those assigned to recipes"""
+
+        ingredient1 = Ingredient.objects.create(user=self.user, name='Eggs')
+        ingredient2 = Ingredient.objects.create(user=self.user, name='Cheese')
+
+        recipe1 = Recipe.objects.create(
+            title='Eggs Benedict',
+            time_minutes=5,
+            price=100,
+            user=self.user,
+        )
+
+        recipe2 = Recipe.objects.create(
+            title='Cheese Omelette',
+            time_minutes=10,
+            price=150,
+            user=self.user,
+        )
+
+        recipe1.ingredients.add(ingredient1)
+        recipe2.ingredients.add(ingredient2)
+
+        res = self.client.get(INGREDIENTS_URL, {'assigned_only': 1})
+
+        self.assertEqual(len(res.data), 2 )
+
+

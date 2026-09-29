@@ -446,7 +446,7 @@ class PublicRecipeApiTests(TestCase):
         recipe2.tag.add(tag2)
         recipe3 = create_recipe(user=self.user, title='Fish and chips')
 
-        params = {'tags': f'{tag1.id},{tag2.id}'}
+        params = {'tag': f'{tag1.id},{tag2.id}'}
         res = self.client.get(
             RECIPE_URL, params
         )
