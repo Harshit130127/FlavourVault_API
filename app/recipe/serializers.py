@@ -27,7 +27,7 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """serializer for recipe objects"""
 
-    tags = TagSerializer(many=True, required=False)
+    tags = TagSerializer(many=True, required=False, source='tag')
     ingredients = IngredientSerializer(many=True, required=False)
 
 
@@ -67,7 +67,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """create and return a new recipe"""
-        tags = validated_data.pop('tags', [])
+        tags = validated_data.pop('tag', [])
 
         ingredients = validated_data.pop('ingredients', [])
 
@@ -80,7 +80,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """update recipe"""
-        tags = validated_data.pop('tags', None)
+        tags = validated_data.pop('tag', None)
         ingredients = validated_data.pop('ingredients', None)
         if tags is not None:
             instance.tag.clear()
